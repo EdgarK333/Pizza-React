@@ -1,6 +1,6 @@
 import React from 'react';
 import Categories from '../components/Categories';
-import Sort, { sortlist } from '../components/Sort';
+import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
@@ -10,6 +10,7 @@ import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filte
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs';
+import { List } from 'react-content-loader';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -17,9 +18,8 @@ export const Home = () => {
 
   const isSearch = React.useRef(false);
 
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
-  const sort = useSelector((state) => state.filterSlice.sort);
-  const currentPage = useSelector((state) => state.filterSlice.currentPage);
+  const { categoryId, sort } = useSelector((state) => state.filter);
+  const currentPage = useSelector((state) => state.filter.currentPage);
 
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
@@ -54,7 +54,7 @@ export const Home = () => {
   //   if (window.location.search) {
   //     const params = qs.parse(window.location.search.substring(1));
 
-  //     const sort = sortlist.find((obj) => obj.sortProperty === params.sortProperty);
+  //     const sort = List.find((obj) => obj.sortProperty === params.sortProperty);
   //     dispatch(
   //       setFilters({
   //         ...params,
